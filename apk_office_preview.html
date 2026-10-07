@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APK OFFICE — Apps & Games</title>
+<style>
+:root{
+  --bg:#06101d; --panel:#0a1728; --panel2:#0d1d31; --line:#19304a;
+  --text:#f4f8fb; --muted:#8fa4bb; --green:#19e89b; --green2:#0acb83;
+  --blue:#1c8cff; --shadow:0 18px 50px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+.topbar{height:72px;border-bottom:1px solid var(--line);background:rgba(6,16,29,.92);backdrop-filter:blur(16px);position:sticky;top:0;z-index:20}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:-.5px;font-size:20px}
+.logo-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(145deg,#21f0a5,#0aa9ff);display:grid;place-items:center;font-size:22px;box-shadow:0 8px 25px rgba(25,232,155,.2)}
+.logo small{display:block;color:#7f94aa;font-size:8px;font-weight:700;letter-spacing:.6px;margin-top:1px}
+.navlinks{display:flex;gap:28px;color:#b9c8d8;font-size:13px;font-weight:700}
+.navlinks a:hover,.navlinks a.active{color:var(--green)}
+.actions{display:flex;gap:9px}
+.iconbtn{width:38px;height:38px;border:1px solid var(--line);background:#0a1829;color:#d9e7f4;border-radius:11px}
+.hero{padding:62px 0 36px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:500px;height:500px;right:-180px;top:-180px;background:radial-gradient(circle,rgba(25,232,155,.15),transparent 68%);pointer-events:none}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:38px}
+.badge{display:inline-flex;align-items:center;gap:7px;border:1px solid rgba(25,232,155,.35);background:rgba(25,232,155,.07);color:#43f0b0;border-radius:999px;padding:7px 12px;font-size:11px;font-weight:800}
+h1{font-size:clamp(42px,6vw,72px);line-height:.96;letter-spacing:-3px;margin:20px 0 18px;max-width:650px}
+h1 span{color:var(--green)}
+.hero p{max-width:560px;color:#9bb0c5;line-height:1.7;margin:0 0 25px}
+.search{display:flex;max-width:590px;background:#f5f8fb;border-radius:14px;padding:5px;box-shadow:0 14px 45px rgba(0,0,0,.25)}
+.search input{min-width:0;flex:1;border:0;outline:0;background:transparent;padding:14px 14px;color:#172434}
+.search button{border:0;border-radius:10px;background:var(--green);color:#04140d;font-weight:900;padding:0 22px}
+.hero-art{min-height:330px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#0b1c30,#07121f);position:relative;display:grid;place-items:center;box-shadow:var(--shadow);overflow:hidden}
+.phone{width:210px;height:360px;border:7px solid #17283b;border-radius:32px;background:#071421;transform:rotate(8deg);box-shadow:0 25px 60px rgba(0,0,0,.55);padding:18px 14px}
+.phone-head{display:flex;justify-content:space-between;font-size:10px;color:#a8bacb}
+.phone-logo{font-size:18px;font-weight:900;margin:26px 0 12px}
+.mini-search{height:32px;border-radius:9px;background:#10243a;border:1px solid #213d58;color:#7f96ad;font-size:9px;padding:9px}
+.mini-card{display:flex;gap:8px;align-items:center;background:#0d2033;border:1px solid #1b3955;border-radius:11px;padding:9px;margin-top:10px}
+.appicon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-size:20px;background:#eef4fa;color:#111}
+.mini-card b{font-size:9px}.mini-card small{display:block;color:#7990a8;font-size:7px;margin-top:3px}
+.float{position:absolute;padding:11px 15px;background:#10263b;border:1px solid #24435f;border-radius:12px;box-shadow:var(--shadow);font-size:11px;font-weight:800}
+.f1{right:8%;top:18%}.f2{left:5%;bottom:18%}
+.section{padding:30px 0 70px}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}
+.section-head h2{margin:0;font-size:25px;letter-spacing:-.7px}
+.section-head p{margin:5px 0 0;color:#7e94aa;font-size:13px}
+.view{color:var(--green);font-size:12px;font-weight:800}
+.chips{display:flex;gap:9px;overflow:auto;padding-bottom:12px;margin-bottom:15px}
+.chip{white-space:nowrap;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:#09182a;color:#91a6bb;font-size:12px;font-weight:800}
+.chip.active{background:rgba(25,232,155,.12);border-color:rgba(25,232,155,.38);color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.card{background:linear-gradient(180deg,#0b1a2c,#091626);border:1px solid var(--line);border-radius:17px;padding:14px;transition:.2s;min-width:0}
+.card:hover{transform:translateY(-4px);border-color:#2a4a67;box-shadow:var(--shadow)}
+.card .appicon{width:52px;height:52px;margin-bottom:12px}
+.card h3{font-size:14px;margin:0 0 4px}
+.card p{font-size:10px;color:#7890a8;margin:0 0 11px}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{font-size:8px;color:#50eeb4;background:rgba(25,232,155,.08);border:1px solid rgba(25,232,155,.2);padding:4px 6px;border-radius:6px;font-weight:800}
+.card .open{width:100%;margin-top:12px;border:1px solid #24425d;background:#0b2034;color:#dce9f4;border-radius:9px;padding:8px;font-size:10px;font-weight:800}
+.card .open:hover{background:#112d47}
+.ad{border:1px dashed #29425b;border-radius:15px;height:90px;display:grid;place-items:center;color:#627a92;font-size:10px;margin:10px 0 26px}
+footer{border-top:1px solid var(--line);padding:28px 0;color:#71879e;font-size:11px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px;z-index:50}
+.modal.show{display:grid}
+.modalbox{width:min(560px,100%);background:#091727;border:1px solid #23425e;border-radius:22px;padding:25px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+.modal-top{display:flex;justify-content:space-between;align-items:start;gap:15px}
+.modal h2{margin:0;font-size:22px}.close{background:none;border:0;color:#91a5b9;font-size:24px}
+.download{display:flex;align-items:center;gap:14px;margin:22px 0;padding:16px;border-radius:15px;background:#0d2034;border:1px solid #1d3b56}
+.download .appicon{margin:0}
+.telegram{display:block;text-align:center;padding:13px;border-radius:11px;background:var(--green);color:#04140d;font-weight:900;margin-top:16px}
+.notice{font-size:10px;color:#7f94a8;line-height:1.6;margin-top:13px}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-art{display:none}.grid{grid-template-columns:repeat(3,1fr)}.navlinks{display:none}}
+@media(max-width:600px){.hero{padding-top:42px}.grid{grid-template-columns:repeat(2,1fr)}h1{font-size:48px}.search button{padding:0 15px}.topbar,.nav{height:64px}.logo{font-size:17px}.section{padding-bottom:45px}}
+
+    .announcement{padding:9px 16px;text-align:center;background:#101b2c;border-bottom:1px solid #24344c;color:#c9d5e5;font-size:13px}
+    .announcement a{color:#a3ff12;font-weight:700;text-decoration:none}
+    .nav-links a.active{color:#a3ff12}
+    .section-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 18px}
+    .pill-btn{border:1px solid #2b3d56;background:#101b2c;color:#dce6f2;border-radius:999px;padding:8px 13px;cursor:pointer}
+    .pill-btn:hover,.pill-btn.active{border-color:#a3ff12;color:#a3ff12}
+    .app-meta{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;color:#91a3b8;font-size:12px}
+    .tag{background:#162238;border:1px solid #273b56;border-radius:8px;padding:4px 7px}
+    .details-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:20px}
+    .details-panel{background:#0c1727;border:1px solid #20324b;border-radius:18px;padding:20px}
+    .details-panel h3{margin-top:0}
+    .feature-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .feature-item{padding:12px;background:#111f33;border-radius:12px;color:#cbd6e4}
+    .request-form{display:grid;gap:12px;max-width:720px}
+    .request-form input,.request-form textarea,.request-form select{width:100%;box-sizing:border-box;background:#0b1524;color:#fff;border:1px solid #273b56;border-radius:12px;padding:13px;outline:none}
+    .request-form textarea{min-height:110px;resize:vertical}
+    .primary-btn{display:inline-block;border:0;background:#a3ff12;color:#07100a;font-weight:800;border-radius:12px;padding:12px 16px;cursor:pointer;text-decoration:none}
+    .secondary-btn{display:inline-block;border:1px solid #30445f;background:#101b2c;color:#e7edf5;border-radius:12px;padding:11px 15px;cursor:pointer;text-decoration:none}
+    .legal{color:#aebccc;line-height:1.7}
+    .legal strong{color:#edf3fa}
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+    .stat{padding:16px;background:#0d1929;border:1px solid #20324b;border-radius:14px}
+    .stat b{display:block;font-size:22px;color:#a3ff12;margin-bottom:4px}
+    .empty-state{text-align:center;padding:35px;color:#8ea0b5}
+    @media(max-width:720px){.details-grid,.feature-list,.stat-row{grid-template-columns:1fr}.announcement{font-size:12px}}
+
+/* APK OFFICE — iPhone/SF Pro typography + mobile overflow fixes */
+html{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  margin:0;
+  overflow-x:hidden;
+  font-family:-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-synthesis:none;
+  letter-spacing:-0.01em;
+}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,iframe{max-width:100%;height:auto}
+button,input,textarea,select{font:inherit;max-width:100%}
+h1,h2,h3,h4,h5,h6,p,a,span,div,li{
+  overflow-wrap:anywhere;
+  word-break:normal;
+}
+p{max-width:100%}
+section,.section,.details-section,.details-panel,.hero,.container,main,header,footer{
+  max-width:100%;
+  min-width:0;
+}
+.details-panel,.legal,.request-form{
+  overflow:hidden;
+}
+.legal p{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}
+.nav-links{
+  min-width:0;
+  max-width:100%;
+}
+.nav-links a{
+  white-space:nowrap;
+}
+@media(max-width:720px){
+  body{font-size:15px}
+  h1{font-size:clamp(30px,9vw,42px);line-height:1.08}
+  h2{font-size:clamp(24px,7vw,32px);line-height:1.12}
+  h3{font-size:20px;line-height:1.2}
+  p{line-height:1.55}
+  .details-section,.details-panel{
+    width:100%;
+    max-width:100%;
+  }
+  .details-panel{
+    padding:16px;
+    border-radius:16px;
+  }
+  .feature-list{
+    grid-template-columns:1fr !important;
+  }
+  .stat-row{
+    grid-template-columns:1fr !important;
+  }
+  .request-form input,.request-form textarea,.request-form select{
+    min-width:0;
+    width:100%;
+  }
+  .primary-btn,.secondary-btn,.telegram{
+    max-width:100%;
+    white-space:normal;
+    text-align:center;
+  }
+}
+
+
+/* APK OFFICE — full platform UI */
+:root{
+  --ao-bg:#07111f; --ao-card:#0d1929; --ao-card2:#101f33;
+  --ao-border:#223650; --ao-text:#eef4fb; --ao-muted:#91a3b8;
+  --ao-accent:#a3ff12; --ao-accent2:#7ee000;
+}
+.search-wrap{position:relative;max-width:760px;margin:22px auto}
+.search-wrap input{width:100%;padding:17px 52px 17px 18px;border-radius:15px;border:1px solid var(--ao-border);background:#0b1626;color:#fff;outline:none;font-size:16px}
+.search-wrap .search-icon{position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#8396ad}
+.search-suggestions{position:absolute;z-index:20;left:0;right:0;top:58px;background:#0d1929;border:1px solid #2a405f;border-radius:14px;overflow:hidden;display:none;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.search-suggestions.show{display:block}
+.search-suggestion{display:flex;gap:12px;align-items:center;padding:12px 14px;cursor:pointer;border-bottom:1px solid #1b2b40}
+.search-suggestion:hover{background:#13243a}
+.app-icon-sm{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:#172a43;font-size:21px;flex:none}
+.result-count{color:var(--ao-muted);font-size:13px;margin:0 0 14px}
+.section-heading{display:flex;justify-content:space-between;gap:18px;align-items:end}
+.section-heading .eyebrow{color:var(--ao-accent);font-size:11px;font-weight:800;letter-spacing:.12em}
+.view-all{color:var(--ao-accent);text-decoration:none;font-weight:700;font-size:13px}
+.app-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.app-card{min-width:0;background:var(--ao-card);border:1px solid var(--ao-border);border-radius:17px;padding:15px;transition:.2s transform,.2s border-color;cursor:pointer}
+.app-card:hover{transform:translateY(-2px);border-color:#456384}
+.app-card-top{display:flex;gap:12px;min-width:0}
+.app-card h3{font-size:16px;margin:0 0 5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-card p{font-size:12px;color:var(--ao-muted);margin:0;line-height:1.45}
+.app-icon-lg{width:58px;height:58px;border-radius:15px;display:grid;place-items:center;background:#152941;font-size:29px;flex:none}
+.rating{font-size:12px;color:#f5d56a;margin-top:7px}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.card-tags span{font-size:10px;padding:4px 7px;border-radius:7px;background:#14243a;color:#aebed0}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.filter-bar select{background:#0d1929;color:#dfe8f2;border:1px solid var(--ao-border);padding:9px 12px;border-radius:10px}
+.details-modal{position:fixed;inset:0;z-index:100;display:none;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);padding:18px;overflow:auto}
+.details-modal.open{display:flex;align-items:center;justify-content:center}
+.details-modal-box{width:min(860px,100%);background:#0a1524;border:1px solid #2b425f;border-radius:22px;padding:22px;box-shadow:0 25px 90px rgba(0,0,0,.5)}
+.close-modal{float:right;border:0;background:#18283e;color:#dbe6f3;width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:20px}
+.detail-header{display:flex;gap:16px;align-items:center;margin:8px 0 18px}
+.detail-icon{width:82px;height:82px;border-radius:21px;display:grid;place-items:center;background:#162a44;font-size:42px;flex:none}
+.detail-title h2{margin:0 0 5px}
+.detail-title p{margin:0;color:var(--ao-muted)}
+.detail-actions{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+.screenshot-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.screenshot{height:180px;border-radius:13px;background:linear-gradient(135deg,#14263f,#0b1626);border:1px solid #243b57;display:grid;place-items:center;color:#607894;font-size:12px}
+.spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:14px 0}
+.spec{background:#0f1e31;border-radius:11px;padding:11px}
+.spec small{display:block;color:#71869f;font-size:10px}
+.spec b{display:block;margin-top:3px;font-size:13px}
+.ai-box{background:linear-gradient(135deg,#0d1d31,#10263a);border:1px solid #2c4d62;border-radius:20px;padding:22px}
+.ai-input-row{display:flex;gap:9px;margin-top:14px}
+.ai-input-row input{flex:1;min-width:0;background:#091525;border:1px solid #29415e;color:#fff;border-radius:12px;padding:13px}
+.ai-results{margin-top:16px;display:none}
+.ai-results.show{display:block}
+.ai-result{display:flex;align-items:center;gap:12px;padding:12px;background:#0a1728;border:1px solid #203750;border-radius:12px;margin-top:8px}
+.ad-slot-pro{margin:22px 0;border:1px dashed #30445f;border-radius:14px;padding:18px;text-align:center;color:#657991;font-size:11px;letter-spacing:.08em}
+.trend-badge{font-size:10px;background:#263018;color:var(--ao-accent);padding:4px 7px;border-radius:7px}
+.pwa-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#0e1d30;border:1px solid #29405b;border-radius:15px;padding:13px 15px;margin:18px 0}
+.pwa-banner small{color:#91a3b8}
+.pwa-btn{background:var(--ao-accent);border:0;border-radius:10px;padding:9px 12px;font-weight:800;cursor:pointer;color:#07100a}
+@media(max-width:980px){.app-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){
+  .app-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .app-card{padding:12px}
+  .app-icon-lg{width:50px;height:50px;border-radius:13px;font-size:25px}
+  .screenshot-row{grid-template-columns:1fr 1fr}
+  .screenshot{height:140px}
+  .spec-grid{grid-template-columns:1fr 1fr}
+  .detail-header{align-items:flex-start}
+  .detail-icon{width:68px;height:68px;font-size:34px}
+  .ai-input-row{flex-direction:column}
+  .pwa-banner{align-items:flex-start;flex-direction:column}
+}
+@media(max-width:420px){.app-grid{grid-template-columns:1fr}}
+
+
+/* Final mobile safety */
+@media(max-width:720px){
+  .section-heading{align-items:flex-start;flex-direction:column}
+  .details-modal{padding:10px}
+  .details-modal-box{padding:16px;border-radius:18px}
+  .screenshot-row{grid-template-columns:1fr}
+  .screenshot{height:120px}
+}
+
+</style>
+
+  <meta name="application-name" content="APK OFFICE">
+  <meta name="description" content="APK OFFICE — discover free, open-source and developer-authorized Android apps and games. Browse by category and continue to the official APK OFFICE Telegram channel.">
+  <meta name="keywords" content="APK OFFICE, Android apps, free Android apps, open source APK, Android games, APK directory, Bangladesh">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#08111f">
+  <meta property="og:title" content="APK OFFICE — Android Apps & Games">
+  <meta property="og:description" content="Discover free, open-source and authorized Android apps and games.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="APK OFFICE">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2308111f'/%3E%3Cpath d='M17 18h30v8H17zm0 12h22v8H17zm0 12h30v8H17z' fill='%23a3ff12'/%3E%3C/svg%3E">
+
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"APK OFFICE",
+  "description":"Android app and game discovery directory for free, open-source and authorized software.",
+  "potentialAction":{"@type":"SearchAction","target":"?q={search_term_string}","query-input":"required name=search_term_string"}
+}
+</script>
+
+<!--
+  Telegram App Request integration:
+  Frontend posts to /api/request.
+  Keep TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID on the server only.
+-->
+</head>
+<body>
+  <div id="announcement" class="announcement">⚡ APK OFFICE is growing — free & authorized apps only. <a href="#request">Request an app</a></div>
+<div id="app">
+<header class="topbar">
+  <div class="container nav">
+    <a class="logo" href="#">
+      <span class="logo-icon">🤖</span>
+      <span>APK OFFICE<small>APPS • GAMES • APK DIRECTORY</small></span>
+    </a>
+    <nav class="navlinks">
+      <a class="active" href="#">Home</a><a href="#browse">Apps</a><a href="#games">Games</a><a href="#categories">Categories</a>
+    </nav>
+    <div class="actions"><button class="iconbtn" onclick="focusSearch()">⌕</button><button class="iconbtn" onclick="toggleTheme()">◐</button></div>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="home">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">✦ FREE • FAST • VERIFIED DIRECTORY</div>
+      <h1>Find the apps you need.<br><span>Download smarter.</span></h1>
+      <p>Discover free, open-source and developer-authorized Android apps and games in one clean place.</p>
+      <div class="search"><input id="searchInput" placeholder="Search for apps, games..." oninput="renderApps()"><button onclick="renderApps()">Search</button></div>
+    </div>
+    <div class="hero-art">
+      <div class="float f1">⚡ Fast downloads</div>
+      <div class="phone">
+        <div class="phone-head"><span>APK OFFICE</span><span>12:30</span></div>
+        <div class="phone-logo">Apps made simple.</div>
+        <div class="mini-search">🔎 Search apps...</div>
+        <div class="mini-card"><div class="appicon">▶️</div><div><b>VLC</b><small>Media Player</small></div></div>
+        <div class="mini-card"><div class="appicon">🦊</div><div><b>Firefox</b><small>Web Browser</small></div></div>
+        <div class="mini-card"><div class="appicon">🎧</div><div><b>NewPipe</b><small>Open-source</small></div></div>
+      </div>
+      <div class="float f2">✓ Open-source & free</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="apps">
+<div class="container">
+  <div class="section-head"><div><h2>🔥 Popular Apps</h2><p>Useful apps people are looking for</p></div><a class="view" href="#apps">View All →</a></div>
+  <div class="chips" id="categories">
+    <button class="chip active" onclick="setCat('All',this)">All</button><button class="chip" onclick="setCat('Video',this)">Video</button><button class="chip" onclick="setCat('Music',this)">Music</button><button class="chip" onclick="setCat('Browser',this)">Browser</button><button class="chip" onclick="setCat('Tools',this)">Tools</button><button class="chip" onclick="setCat('Games',this)">Games</button>
+  </div>
+  <div class="grid" id="appGrid"></div>
+  <div class="ad">ADVERTISEMENT SPACE • 728 × 90</div>
+</div>
+</section>
+
+<section class="section" id="games">
+<div class="container">
+  <div class="section-head"><div><h2>🎮 Featured Games</h2><p>Game listings can live in their own category</p></div></div>
+  <div class="grid">
+    <article class="card"><div class="appicon">🧱</div><h3>OpenTTD</h3><p>Strategy • Open source</p><div class="tags"><span class="tag">FREE</span><span class="tag">OPEN SOURCE</span></div><button class="open" onclick="openModal('OpenTTD')">View App</button></article>
+    <article class="card"><div class="appicon">🏎️</div><h3>SuperTuxKart</h3><p>Racing • Open source</p><div class="tags"><span class="tag">FREE</span><span class="tag">GAME</span></div><button class="open" onclick="openModal('SuperTuxKart')">View App</button></article>
+  </div>
+</div>
+</section>
+</main>
+
+
+<div class="ad-slot" style="margin:26px auto;max-width:728px;text-align:center;padding:22px;border:1px dashed #30445f;border-radius:14px;color:#64758b;font-size:12px;letter-spacing:.08em">ADVERTISEMENT • 728 × 90 / MOBILE 320 × 100</div>
+
+<section class="details-section" id="trending">
+  <div class="section-heading">
+    <div><div class="eyebrow">DISCOVER</div><h2>🔥 Trending This Week</h2><p>Popular apps people are checking out right now.</p></div>
+    <a class="view-all" href="#apps">View all →</a>
+  </div>
+  <div class="app-grid" id="trendingGrid"></div>
+</section>
+
+<section class="details-section" id="recent">
+  <div class="section-heading">
+    <div><div class="eyebrow">LATEST</div><h2>🆕 Recently Added</h2><p>Fresh additions to APK OFFICE.</p></div>
+  </div>
+  <div class="app-grid" id="recentGrid"></div>
+</section>
+
+<section class="details-section" id="ai-finder">
+  <div class="section-heading">
+    <div><div class="eyebrow">SMART SEARCH</div><h2>🤖 AI App Finder</h2><p>Describe what you need in normal language.</p></div>
+  </div>
+  <div class="ai-box">
+    <strong>What kind of app are you looking for?</strong>
+    <div class="ai-input-row">
+      <input id="aiInput" placeholder="e.g. best video editor for a low-end phone">
+      <button class="primary-btn" onclick="runAIFinder()">✨ Find Apps</button>
+    </div>
+    <div id="aiResults" class="ai-results"></div>
+  </div>
+</section>
+
+<div class="ad-slot-pro">ADVERTISEMENT • 728 × 90 DESKTOP • 320 × 100 MOBILE</div>
+
+<section class="details-section" id="browse">
+  <div class="section-heading">
+    <div><div class="eyebrow">BROWSE</div><h2>📱 All Apps</h2><p>Search, filter and open full app details.</p></div>
+  </div>
+  <div class="filter-bar">
+    <select id="categoryFilter" onchange="renderApps()">
+      <option value="All">All categories</option>
+      <option value="Video">Video</option><option value="Music">Music</option>
+      <option value="Browser">Browser</option><option value="Tools">Tools</option>
+      <option value="Games">Games</option>
+    </select>
+    <select id="sortFilter" onchange="renderApps()">
+      <option value="popular">Most popular</option>
+      <option value="rating">Highest rated</option>
+      <option value="new">Newest</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </div>
+  <p id="resultCount" class="result-count"></p>
+  <div class="app-grid" id="allAppsGrid"></div>
+</section>
+
+<section class="details-section" id="seo-guide">
+  <div class="section-heading">
+    <div><div class="eyebrow">SEARCH READY</div><h2>🔎 Find apps faster</h2></div>
+  </div>
+  <div class="details-panel legal">
+    <p>Every app listing is designed to have a unique title, description, category, version, update information and structured metadata when the site is connected to a real backend.</p>
+    <p>Recommended production URLs: <strong>/app/vlc</strong>, <strong>/app/firefox</strong>, <strong>/games/openttd</strong>.</p>
+  </div>
+</section>
+
+<div class="pwa-banner">
+  <div><strong>📲 Use APK OFFICE like an app</strong><br><small>Add this website to your phone's Home Screen for quick access.</small></div>
+  <button class="pwa-btn" onclick="showPWAHelp()">How to add</button>
+</div>
+
+<section class="details-section" id="request">
+  <div class="section-heading">
+    <div>
+      <div class="eyebrow">APP REQUEST</div>
+      <h2>Can't find an app?</h2>
+      <p>Tell us what you need and we'll consider adding a free, open-source or authorized app.</p>
+    </div>
+  </div>
+  <form class="request-form" onsubmit="submitRequest(event)">
+    <input id="requestName" required placeholder="App name">
+    <select id="requestCategory">
+      <option>Video</option><option>Music</option><option>Browser</option><option>Tools</option><option>Games</option><option>Other</option>
+    </select>
+    <input id="requestLink" placeholder="Official website / Play Store / F-Droid link (optional)">
+    <textarea id="requestNote" placeholder="Anything else we should know?"></textarea>
+    <button class="primary-btn" type="submit">📩 Send Request</button>
+  </form>
+</section>
+
+<section class="details-section" id="about">
+  <div class="section-heading">
+    <div><div class="eyebrow">ABOUT APK OFFICE</div><h2>Simple. Useful. Safer.</h2></div>
+  </div>
+  <div class="details-panel legal">
+    <p><strong>APK OFFICE</strong> is an Android app discovery directory focused on free, open-source and developer-authorized software.</p>
+    <p>Always check an app's source and permissions before installing. APK OFFICE does not support cracked, modified or unauthorized paid software.</p>
+  </div>
+</section>
+
+<section class="details-section" id="privacy">
+  <div class="section-heading"><div><div class="eyebrow">PRIVACY</div><h2>Privacy Policy</h2></div></div>
+  <div class="details-panel legal">
+    <p>APK OFFICE's static preview does not require an account and does not intentionally collect personal information. If analytics, ads, forms or third-party services are enabled after publishing, this policy should be updated to describe what data is collected and why.</p>
+  </div>
+</section>
+
+<section class="details-section" id="terms">
+  <div class="section-heading"><div><div class="eyebrow">TERMS</div><h2>Terms & Content Policy</h2></div></div>
+  <div class="details-panel legal">
+    <p>Use APK OFFICE only for lawful purposes. Listings should be free, open-source, freeware or explicitly authorized for distribution. Do not upload or link to cracked premium apps, stolen software, malware or content that infringes another party's rights.</p>
+  </div>
+</section>
+
+<section class="details-section" id="contact">
+  <div class="section-heading"><div><div class="eyebrow">CONTACT</div><h2>Contact & Removal Requests</h2></div></div>
+  <div class="details-panel legal">
+    <p>For app requests, corrections or copyright concerns, use the request form above or contact the APK OFFICE team through the official Telegram channel.</p>
+    <a class="secondary-btn" href="https://t.me/apkofficeDot_com" target="_blank" rel="noopener noreferrer">✈️ Official Telegram</a>
+  </div>
+</section>
+
+<footer><div class="container">© 2026 APK OFFICE • Free & authorized Android app directory. <span style="float:right">About • Contact • Privacy</span></div><div style="margin-top:12px"><a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="#contact">Contact</a> · <a href="#request">Request an App</a></div></footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+ <div class="modalbox">
+  <div class="modal-top"><div><h2 id="modalTitle">App</h2><p style="color:#8096aa;font-size:12px;margin:6px 0">App details & download options</p></div><button class="close" onclick="closeModal()">×</button></div>
+  <div class="download"><div class="appicon">📦</div><div><b id="modalName">App</b><div style="font-size:10px;color:#7d93aa;margin-top:4px">Latest authorized APK • Android</div></div></div>
+  <a class="telegram" href="https://t.me/apkofficeDot_com" target="_blank" rel="noopener noreferrer">✈️ Continue to Telegram</a>
+  <div class="notice">You will be redirected to the official APK OFFICE Telegram channel.</div>
+ </div>
+</div>
+
+<script>
+const apps=[
+ {name:'VLC',cat:'Video',icon:'▶️',desc:'Media player for Android',tags:['FREE','OPEN SOURCE']},
+ {name:'NewPipe',cat:'Video',icon:'🎧',desc:'Lightweight media app',tags:['OPEN SOURCE','FREE']},
+ {name:'Firefox',cat:'Browser',icon:'🦊',desc:'Fast private web browser',tags:['FREE','BROWSER']},
+ {name:'K-9 Mail',cat:'Tools',icon:'✉️',desc:'Open-source email client',tags:['OPEN SOURCE','FREE']},
+ {name:'AntennaPod',cat:'Music',icon:'🎙️',desc:'Podcast manager',tags:['FREE','OPEN SOURCE']},
+ {name:'F-Droid',cat:'Tools',icon:'🤖',desc:'Open-source app catalog',tags:['FREE','OPEN SOURCE']},
+ {name:'Fennec',cat:'Browser',icon:'🌐',desc:'Open-source mobile browser',tags:['FREE','BROWSER']},
+ {name:'LibreTube',cat:'Video',icon:'📺',desc:'Open-source video client',tags:['OPEN SOURCE','FREE']},
+ {name:'Music Player',cat:'Music',icon:'🎵',desc:'Simple local music player',tags:['FREE','MUSIC']},
+ {name:'Open Camera',cat:'Tools',icon:'📷',desc:'Open-source camera app',tags:['FREE','OPEN SOURCE']}
+];
+let category='All';
+function setCat(c,el){category=c;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));el.classList.add('active');renderApps()}
+function renderApps(){
+ const q=document.getElementById('searchInput').value.toLowerCase().trim();
+ const filtered=apps.filter(a=>(category==='All'||a.cat===category)&&(!q||a.name.toLowerCase().includes(q)||a.desc.toLowerCase().includes(q)));
+ document.getElementById('appGrid').innerHTML=filtered.map(a=>`<article class="card"><div class="appicon">${a.icon}</div><h3>${a.name}</h3><p>${a.desc}</p><div class="tags">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button class="open" onclick="openModal('${a.name}')">View App</button></article>`).join('')||'<div style="grid-column:1/-1;color:#7d93aa;padding:30px 0">No matching apps found.</div>';
+}
+function openModal(name){document.getElementById('modalTitle').textContent=name;document.getElementById('modalName').textContent=name;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function focusSearch(){document.getElementById('searchInput').focus();window.scrollTo({top:0,behavior:'smooth'})}
+function toggleTheme(){document.body.classList.toggle('light-preview')}
+renderApps();
+</script>
+</div>
+
+<script>
+async function submitRequest(e){
+  e.preventDefault();
+
+  const name = document.getElementById('requestName').value.trim();
+  const cat = document.getElementById('requestCategory').value;
+  const link = document.getElementById('requestLink').value.trim();
+  const note = document.getElementById('requestNote').value.trim();
+
+  if(!name){ return; }
+
+  const button = e.submitter || e.target.querySelector('button[type="submit"]');
+  const originalText = button ? button.textContent : '';
+  if(button){
+    button.disabled = true;
+    button.textContent = '⏳ Sending...';
+  }
+
+  try {
+    const response = await fetch('/api/request', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        appName: name,
+        category: cat,
+        link: link,
+        note: note,
+        page: window.location.href
+      })
+    });
+
+    const result = await response.json().catch(() => ({}));
+
+    if(!response.ok){
+      throw new Error(result.error || 'Request failed');
+    }
+
+    alert('✅ Request sent successfully! We will review it soon.');
+    e.target.reset();
+  } catch (error) {
+    console.error(error);
+    alert('❌ Could not send the request right now. Please try again.');
+  } finally {
+    if(button){
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
+}
+</script>
+
+
+<script>
+const APK_APPS = [
+  {id:"vlc",name:"VLC",icon:"▶️",cat:"Video",version:"3.6.5",size:"38 MB",android:"5.0+",rating:4.8,pop:98,updated:"Recently",desc:"Open-source multimedia player that plays almost every common video and audio format.",trend:true},
+  {id:"newpipe",name:"NewPipe",icon:"🎬",cat:"Video",version:"0.28.4",size:"9 MB",android:"5.0+",rating:4.7,pop:94,updated:"Recently",desc:"Lightweight open-source video client focused on privacy and low resource usage.",trend:true},
+  {id:"firefox",name:"Firefox",icon:"🦊",cat:"Browser",version:"145.0",size:"90 MB",android:"8.0+",rating:4.6,pop:96,updated:"New",desc:"Fast, private and customizable open-source web browser.",trend:true},
+  {id:"k9",name:"K-9 Mail",icon:"✉️",cat:"Tools",version:"6.0",size:"12 MB",android:"5.0+",rating:4.5,pop:83,updated:"New",desc:"Open-source email client with powerful account and privacy controls."},
+  {id:"antenna",name:"AntennaPod",icon:"🎙️",cat:"Music",version:"3.9",size:"18 MB",android:"6.0+",rating:4.7,pop:79,updated:"New",desc:"Open-source podcast player with subscriptions, downloads and playlists."},
+  {id:"fdroid",name:"F-Droid",icon:"🤖",cat:"Tools",version:"1.20",size:"9 MB",android:"6.0+",rating:4.6,pop:91,updated:"New",desc:"Catalog of free and open-source Android applications."},
+  {id:"fennec",name:"Fennec",icon:"🦊",cat:"Browser",version:"145.0",size:"85 MB",android:"8.0+",rating:4.5,pop:76,updated:"New",desc:"Community-supported Firefox-based Android browser build."},
+  {id:"libretube",name:"LibreTube",icon:"📺",cat:"Video",version:"0.7",size:"14 MB",android:"8.0+",rating:4.6,pop:82,updated:"New",desc:"Privacy-focused open-source video client."},
+  {id:"musicplayer",name:"Music Player",icon:"🎵",cat:"Music",version:"2.4",size:"7 MB",android:"6.0+",rating:4.3,pop:70,updated:"New",desc:"Simple offline music player for local audio files."},
+  {id:"opencamera",name:"Open Camera",icon:"📷",cat:"Tools",version:"1.53",size:"4 MB",android:"5.0+",rating:4.4,pop:88,updated:"New",desc:"Feature-rich open-source camera application."},
+  {id:"openttd",name:"OpenTTD",icon:"🚂",cat:"Games",version:"14.1",size:"220 MB",android:"5.0+",rating:4.8,pop:87,updated:"New",desc:"Open-source transport simulation game inspired by classic strategy gameplay.",trend:true},
+  {id:"supertuxkart",name:"SuperTuxKart",icon:"🏎️",cat:"Games",version:"1.4",size:"650 MB",android:"5.0+",rating:4.6,pop:81,updated:"New",desc:"Open-source kart racing game with tracks, characters and local fun.",trend:true}
+];
+
+function appCard(a){
+  return `<article class="app-card" onclick="openApp('${a.id}')">
+    <div class="app-card-top">
+      <div class="app-icon-lg">${a.icon}</div>
+      <div style="min-width:0;flex:1">
+        <h3>${a.name}</h3>
+        <p>${a.cat} • ${a.size}</p>
+        <div class="rating">★ ${a.rating}</div>
+      </div>
+    </div>
+    <div class="card-tags"><span>v${a.version}</span>${a.trend?'<span class="trend-badge">🔥 Trending</span>':''}</div>
+  </article>`;
+}
+function renderApps(){
+  const cat=(document.getElementById("categoryFilter")||{}).value||"All";
+  const sort=(document.getElementById("sortFilter")||{}).value||"popular";
+  let list=APK_APPS.filter(a=>cat==="All"||a.cat===cat);
+  if(sort==="rating") list.sort((a,b)=>b.rating-a.rating);
+  else if(sort==="new") list.sort((a,b)=>a.updated==="New"?-1:1);
+  else if(sort==="name") list.sort((a,b)=>a.name.localeCompare(b.name));
+  else list.sort((a,b)=>b.pop-a.pop);
+  const grid=document.getElementById("allAppsGrid");
+  if(grid) grid.innerHTML=list.map(appCard).join("");
+  const count=document.getElementById("resultCount");
+  if(count) count.textContent=`${list.length} apps available`;
+}
+function renderHomeLists(){
+  const t=document.getElementById("trendingGrid");
+  const r=document.getElementById("recentGrid");
+  if(t) t.innerHTML=APK_APPS.filter(a=>a.trend).slice(0,4).map(appCard).join("");
+  if(r) r.innerHTML=APK_APPS.slice(4,10).map(appCard).join("");
+}
+function openApp(id){
+  const a=APK_APPS.find(x=>x.id===id); if(!a) return;
+  document.getElementById("detailModal").classList.add("open");
+  document.getElementById("detailContent").innerHTML=`
+    <div class="detail-header">
+      <div class="detail-icon">${a.icon}</div>
+      <div class="detail-title"><h2>${a.name}</h2><p>${a.cat} • ★ ${a.rating} • ${a.size}</p></div>
+    </div>
+    <div class="spec-grid">
+      <div class="spec"><small>Version</small><b>${a.version}</b></div>
+      <div class="spec"><small>Size</small><b>${a.size}</b></div>
+      <div class="spec"><small>Android</small><b>${a.android}</b></div>
+      <div class="spec"><small>Updated</small><b>${a.updated}</b></div>
+    </div>
+    <div class="detail-actions">
+      <a class="primary-btn" href="https://t.me/apkofficeDot_com" target="_blank" rel="noopener noreferrer">✈️ Continue to Telegram</a>
+      <button class="secondary-btn" onclick="closeApp()">Close</button>
+    </div>
+    <h3>About ${a.name}</h3><p class="legal">${a.desc}</p>
+    <h3>Screenshots</h3>
+    <div class="screenshot-row"><div class="screenshot">App screenshot 01</div><div class="screenshot">App screenshot 02</div><div class="screenshot">App screenshot 03</div></div>
+    <h3>What's New</h3><p class="legal">Latest listing information and authorized release notes can be added here.</p>
+    <h3>Related Apps</h3><div class="app-grid">${APK_APPS.filter(x=>x.cat===a.cat&&x.id!==a.id).slice(0,4).map(appCard).join("")}</div>
+  `;
+}
+function closeApp(){document.getElementById("detailModal").classList.remove("open")}
+function runAIFinder(){
+  const q=(document.getElementById("aiInput").value||"").toLowerCase();
+  let ranked=APK_APPS.map(a=>({a,s:0}));
+  if(q.includes("video")||q.includes("editor")||q.includes("movie")) ranked.forEach(x=>{if(x.a.cat==="Video")x.s+=10});
+  if(q.includes("music")||q.includes("song")||q.includes("audio")) ranked.forEach(x=>{if(x.a.cat==="Music")x.s+=10});
+  if(q.includes("browser")||q.includes("web")||q.includes("privacy")) ranked.forEach(x=>{if(x.a.cat==="Browser")x.s+=8});
+  if(q.includes("game")||q.includes("gaming")) ranked.forEach(x=>{if(x.a.cat==="Games")x.s+=10});
+  if(q.includes("low")||q.includes("light")||q.includes("small")||q.includes("4gb")) ranked.forEach(x=>{if(parseInt(x.a.size)<50)x.s+=5});
+  ranked.sort((x,y)=>y.s-y.a.rating+x.a.rating-y.s).sort((x,y)=>y.s-x.s||y.a.rating-x.a.rating);
+  const results=ranked.filter(x=>x.s>0).slice(0,4);
+  const box=document.getElementById("aiResults");
+  box.classList.add("show");
+  box.innerHTML=(results.length?results:ranked.slice(0,4)).map(x=>`<div class="ai-result" onclick="openApp('${x.a.id}')"><div class="app-icon-sm">${x.a.icon}</div><div style="flex:1"><b>${x.a.name}</b><br><small style="color:#8fa1b6">${x.a.cat} • ★ ${x.a.rating} • ${x.a.size}</small></div><span>→</span></div>`).join("");
+}
+function showPWAHelp(){
+  alert("Android: Chrome menu → Add to Home screen. iPhone: Safari → Share → Add to Home Screen.");
+}
+document.addEventListener("DOMContentLoaded",()=>{
+  renderApps(); renderHomeLists();
+  const input=document.querySelector('.search-wrap input');
+  if(input){
+    const sug=document.createElement("div"); sug.className="search-suggestions"; sug.id="searchSuggestions";
+    input.parentElement.appendChild(sug);
+    input.addEventListener("input",()=>{
+      const q=input.value.trim().toLowerCase();
+      if(!q){sug.classList.remove("show");return}
+      const hits=APK_APPS.filter(a=>(a.name+" "+a.cat+" "+a.desc).toLowerCase().includes(q)).slice(0,5);
+      sug.innerHTML=hits.length?hits.map(a=>`<div class="search-suggestion" onclick="openApp('${a.id}');document.getElementById('searchSuggestions').classList.remove('show')"><div class="app-icon-sm">${a.icon}</div><div><b>${a.name}</b><br><small style="color:#8fa1b6">${a.cat} • ${a.size}</small></div></div>`).join(""):'<div class="search-suggestion">No matching app found</div>';
+      sug.classList.add("show");
+    });
+  }
+});
+</script>
+
+
+<div class="details-modal" id="detailModal" onclick="if(event.target===this)closeApp()">
+  <div class="details-modal-box">
+    <button class="close-modal" onclick="closeApp()" aria-label="Close">×</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+</body>
+</html>
